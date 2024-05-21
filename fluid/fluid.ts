@@ -149,29 +149,6 @@ export class Fluid {
       }
     }
 
-    // let x, y, i, j, i0_, j0_, i1_, j1_, s0, t0, s1, t1, dt0
-    // dt0 = dt * N
-    // for (j = 1; j < N - 1; j++) {
-    //   for (i = 1; i < N - 1; i++) {
-    //     x = i - dt0 * velocX[this.IX(i, j)]
-    //     y = j - dt0 * velocY[this.IX(i, j)]
-    //     if (x < 0.5) x = 0.5
-    //     if (x > N + 0.5) x = N + 0.5
-    //     i0_ = Math.floor(x)
-    //     i1_ = i0_ + 1
-    //     if (y < 0.5) y = 0.5
-    //     if (y > N + 0.5) y = N + 0.5
-    //     j0_ = Math.floor(y)
-    //     j1_ = j0_ + 1
-    //     s1 = x - i0_
-    //     s0 = 1 - s1
-    //     t1 = y - j0_
-    //     t0 = 1 - t1
-    //     d[this.IX(i, j)] =
-    //       s0 * (t0 * d0[this.IX(i0_, j0_)] + t1 * d0[this.IX(i0_, j1_)]) +
-    //       s1 * (t0 * d0[this.IX(i1_, j0_)] + t1 * d0[this.IX(i1_, j1_)])
-    //   }
-    // }
     this.setBound(b, d, N)
   }
 
@@ -207,8 +184,8 @@ export class Fluid {
     for (let i = 0; i < N; i++) {
       for (let j = 0; j < N; j++) {
         const d = density[this.IX(i, j)]
-        // debugger
         p.fill(d)
+        p.noStroke()
         p.square(i * scale, j * scale, scale)
       }
     }
