@@ -190,4 +190,41 @@ export class Fluid {
       }
     }
   }
+  renderV = (p: p5, scale = 1) => {
+    const N = this.size
+    const Vx = this.Vx
+    const Vy = this.Vy
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) {
+        const x = i * scale
+        const y = j * scale
+        const vx = Vx[this.IX(i, j)]
+        const vy = Vy[this.IX(i, j)]
+        p.stroke(255)
+        p.line(x, y, x + vx * scale, y + vy * scale)
+      }
+    }
+  }
+  renderDyedV = (p: p5, scale = 1) => {
+    const N = this.size
+    const Vx = this.Vx
+    const Vy = this.Vy
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) {
+        const x = i * scale
+        const y = j * scale
+        const vx = Vx[this.IX(i, j)]
+        const vy = Vy[this.IX(i, j)]
+        const d = this.density[this.IX(i, j)]
+        const vel = p.mag(vx, vy)
+        p.colorMode(p.HSB)
+        p.fill((p.map(vel, 0, 0.1, 0, 256) + 128) % 256, 255, p.map(d, 0, 500, 0, 255))
+        // p.fill(p.map(d, 0, 500, 0, 255), 255, p.map(d, 0, 500, 0, 255))
+        p.noStroke()
+        p.square(x, y, scale)
+        // p.stroke(255)
+        // p.line(x, y, x + vx * scale, y + vy * scale)
+      }
+    }
+  }
 }
