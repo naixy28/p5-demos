@@ -3,7 +3,7 @@ import './style.css'
 import p5 from 'p5'
 
 const config = {
-  scale: 4,
+  scale: 10,
   N: 128,
   iter: 4,
 }
@@ -14,10 +14,10 @@ let t = 0
 const sketch = (p: p5) => {
   p.setup = () => {
     p.createCanvas(config.scale * config.N, config.scale * config.N)
-    fluid = new Fluid(0.2, 0.0, 0.0000001, config.N)
+    fluid = new Fluid(0.1, 0.0, 0.0000001, config.N)
   }
   p.mouseDragged = () => {
-    fluid.addDensity(Math.floor(p.mouseX / config.scale), Math.floor(p.mouseY / config.scale), 150)
+    fluid.addDensity(Math.floor(p.mouseX / config.scale), Math.floor(p.mouseY / config.scale), 650)
     const amtX = p.mouseX - p.pmouseX
     const amtY = p.mouseY - p.pmouseY
     fluid.addVelocity(Math.floor(p.mouseX / config.scale), Math.floor(p.mouseY / config.scale), amtX, amtY)
@@ -44,9 +44,9 @@ const sketch = (p: p5) => {
         fluid.addDensity(cx + i, cy + j, p.random(200, 500))
       }
     }
-    // fluid.addDensity(cx, cy, p.random(200, 500))
     fluid.addVelocity(cx, cy, v.x, v.y)
-    // fluid.renderD(p, config.scale)
+    fluid.renderD(p, config.scale)
+    // fluid.renderV(p, config.scale)
     fluid.renderDyedV(p, config.scale)
     fadeD()
     t += 0.01
@@ -54,3 +54,25 @@ const sketch = (p: p5) => {
 }
 
 new p5(sketch)
+
+let previousTime = performance.now()
+const fpsLimit = 60
+const interval = 1000 / fpsLimit
+
+function controlledRAF(callback: any) {
+  function loop(currentTime: number) {
+    if (currentTime - previousTime >= interval) {
+      previousTime = currentTime
+      callback(currentTime)
+    }
+    requestAnimationFrame(loop)
+  }
+
+  requestAnimationFrame(loop)
+}
+
+// Example usage
+// controlledRAF((currentTime: number) => {
+//   // Your animation logic here
+//   console.log('Frame rendered at', currentTime)
+// })

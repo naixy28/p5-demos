@@ -104,7 +104,7 @@ export class Fluid {
     this.setBound(1, velocX, N)
     this.setBound(2, velocY, N)
   }
-  advecnt = (b: number, d: number[], d0: number[], velocX: number[], velocY: number[], dt: number, N: number) => {
+  advect = (b: number, d: number[], d0: number[], velocX: number[], velocY: number[], dt: number, N: number) => {
     let i0, i1, j0, j1
 
     let dtx = dt * (N - 2)
@@ -170,13 +170,13 @@ export class Fluid {
 
     this.project(Vx0, Vy0, Vx, Vy, iter, N)
 
-    this.advecnt(1, Vx, Vx0, Vx0, Vy0, dt, N)
-    this.advecnt(2, Vy, Vy0, Vx0, Vy0, dt, N)
+    this.advect(1, Vx, Vx0, Vx0, Vy0, dt, N)
+    this.advect(2, Vy, Vy0, Vx0, Vy0, dt, N)
 
     this.project(Vx, Vy, Vx0, Vy0, iter, N)
 
     this.diffuse(0, s, density, diff, dt, iter, N)
-    this.advecnt(0, density, s, Vx, Vy, dt, N)
+    this.advect(0, density, s, Vx, Vy, dt, N)
   }
   renderD = (p: p5, scale = 1) => {
     const N = this.size
@@ -218,8 +218,10 @@ export class Fluid {
         const d = this.density[this.IX(i, j)]
         const vel = p.mag(vx, vy)
         p.colorMode(p.HSB)
-        p.fill((p.map(vel, 0, 0.1, 0, 256) + 128) % 256, 255, p.map(d, 0, 500, 0, 255))
-        // p.fill(p.map(d, 0, 500, 0, 255), 255, p.map(d, 0, 500, 0, 255))
+        // p.fill((p.map(vel, 0, 0.1, 0, 255) + 0) % 255, p.map(d, 0, 500, 0, 255), p.map(d, 0, 500, 0, 255))
+
+        // Play around with the color
+        p.fill((p.map(vel, 0, 0.1, 228, 254, true) + 0) % 255, p.map(d, 0, 500, 0, 255), p.map(d, 0, 500, 0, 255))
         p.noStroke()
         p.square(x, y, scale)
         // p.stroke(255)
