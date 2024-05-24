@@ -221,7 +221,7 @@ export class Fluid {
         // p.fill((p.map(vel, 0, 0.1, 0, 255) + 0) % 255, p.map(d, 0, 500, 0, 255), p.map(d, 0, 500, 0, 255))
 
         // Play around with the color
-        p.fill((p.map(vel, 0, 0.1, 228, 254, true) + 0) % 255, p.map(d, 0, 500, 0, 255), p.map(d, 0, 500, 0, 255))
+        p.fill((p.map(vel, 0, 0.1, 128, 254, true) + 0) % 255, p.map(d, 0, 500, 0, 155, true), p.map(d, 0, 500, 0, 255))
         p.noStroke()
         p.square(x, y, scale)
         // p.stroke(255)

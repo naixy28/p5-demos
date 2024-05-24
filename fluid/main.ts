@@ -3,7 +3,7 @@ import './style.css'
 import p5 from 'p5'
 
 const config = {
-  scale: 10,
+  scale: 4,
   N: 128,
   iter: 4,
 }
@@ -45,7 +45,7 @@ const sketch = (p: p5) => {
       }
     }
     fluid.addVelocity(cx, cy, v.x, v.y)
-    fluid.renderD(p, config.scale)
+    // fluid.renderD(p, config.scale)
     // fluid.renderV(p, config.scale)
     fluid.renderDyedV(p, config.scale)
     fadeD()
