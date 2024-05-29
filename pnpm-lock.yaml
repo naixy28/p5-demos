@@ -13,6 +13,9 @@ dependencies:
     version: 1.9.3
 
 devDependencies:
+  '@types/d3-delaunay':
+    specifier: ^6.0.4
+    version: 6.0.4
   '@types/p5':
     specifier: ^1.7.6
     version: 1.7.6
@@ -359,6 +362,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@types/d3-delaunay@6.0.4:
+    resolution: {integrity: sha512-ZMaSKu4THYCU6sV64Lhg6qjf1orxBthaC161plr5KuPHo3CNm8DTHiLw/5Eq2b6TsNP0W0iJrUOFscY6Q450Hw==}
+    dev: true
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}

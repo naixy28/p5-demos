@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "fluid"]
+  "include": ["src", "fluid", "weighed-voronoi-stippling"]
 }

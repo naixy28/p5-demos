@@ -1,9 +1,9 @@
 import './style.css'
 import p5 from 'p5'
-// import testImg from './assets/001.jpeg'
+import testImg from './assets/001.jpeg'
 // import testImg from './assets/002.jpg'
 // import testImg from './assets/003.png'
-import testImg from './assets/005.jpg'
+// import testImg from './assets/005.jpg'
 // import testImg from './assets/006.jpg'
 
 let img: p5.Image
