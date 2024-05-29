@@ -3,17 +3,21 @@ import p5, { Vector } from 'p5'
 import { Delaunay, Voronoi } from 'd3-delaunay'
 // import img from './gloria.jpeg'
 // import img from './noise.jpg'
-import img from './The Weeknd Dawn FM Cover.jpg'
+// import img from './The Weeknd Dawn FM Cover.jpg'
 // import img from './Taylor Swift.jpg'
-// import img from './bcs.jpg'
+import img from './bcs.jpg'
+// import img from './sea.jpeg'
 
 let image: p5.Image
 
 const config = {
   width: 500,
   height: 500,
-  maxBrightness: 200,
+  maxBrightness: 256,
   iterate: 20,
+  pointCount: 20000,
+  pointMinSize: 2,
+  pointMaxSize: 10,
 }
 let points: Vector[] = []
 let centroids: Vector[] = []
@@ -30,12 +34,13 @@ const sketch = (p: p5) => {
     image = p.loadImage(img)
   }
   p.setup = () => {
+    p.frameRate(10)
     config.width = image.width
     config.height = image.height
     p.createCanvas(config.width, config.height)
     image.loadPixels()
     // p.noLoop()
-    for (let i = 0; i < 25000; i++) {
+    for (let i = 0; i < config.pointCount; i++) {
       const x = p.random(config.width)
       const y = p.random(config.height)
       const b = p.brightness(image.get(x, y))
@@ -67,7 +72,7 @@ const sketch = (p: p5) => {
       const color = image.get(v.x, v.y)
       p.stroke(color)
       // p.stroke(0)
-      const sw = p.map(avgWeights[i], 0, maxWeight, 4, 10, true)
+      const sw = p.map(avgWeights[i], 0, maxWeight, config.pointMinSize, config.pointMaxSize, true)
       p.strokeWeight(sw)
       p.point(v.x, v.y)
     }
