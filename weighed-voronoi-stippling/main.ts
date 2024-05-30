@@ -21,10 +21,10 @@ const config = {
   height: 500,
   maxBrightness: 255,
   iterate: 20,
-  infinite: true,
+  infinite: false,
   pointCount: 20000,
-  pointMinSize: 10,
-  pointMaxSize: 20,
+  pointMinSize: 2,
+  pointMaxSize: 4,
   style: Style.PAINT,
 }
 let points: Vector[] = []
@@ -42,7 +42,7 @@ const sketch = (p: p5) => {
     image = p.loadImage(img)
   }
   p.setup = () => {
-    // p.frameRate(10)
+    p.frameRate(5)
     config.width = image.width
     config.height = image.height
     p.createCanvas(config.width, config.height)
@@ -75,6 +75,7 @@ const sketch = (p: p5) => {
   }
 
   const drawPoints = (points: Vector[]) => {
+    const pointSacle = p.map(iterate, 0, config.iterate, 1, 5, true)
     for (let i = 0; i < points.length; i++) {
       const v = points[i]
       const color = image.get(v.x, v.y)
@@ -85,7 +86,14 @@ const sketch = (p: p5) => {
           p.stroke(0)
           break
         case Style.PAINT:
-          sw = p.map(avgWeights[i], 0, maxWeight, config.pointMinSize, config.pointMaxSize, true)
+          sw = p.map(
+            avgWeights[i],
+            0,
+            maxWeight,
+            config.pointMinSize * pointSacle,
+            config.pointMaxSize * pointSacle,
+            true
+          )
           p.stroke(color)
       }
       p.strokeWeight(sw)
