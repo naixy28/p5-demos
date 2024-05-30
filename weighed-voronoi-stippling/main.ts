@@ -5,19 +5,27 @@ import { Delaunay, Voronoi } from 'd3-delaunay'
 // import img from './noise.jpg'
 // import img from './The Weeknd Dawn FM Cover.jpg'
 // import img from './Taylor Swift.jpg'
-import img from './bcs.jpg'
+// import img from './bcs.jpg'
 // import img from './sea.jpeg'
+import img from './fujii.jpeg'
 
 let image: p5.Image
+
+enum Style {
+  POINTS,
+  PAINT,
+}
 
 const config = {
   width: 500,
   height: 500,
-  maxBrightness: 256,
+  maxBrightness: 255,
   iterate: 20,
+  infinite: true,
   pointCount: 20000,
-  pointMinSize: 2,
-  pointMaxSize: 10,
+  pointMinSize: 10,
+  pointMaxSize: 20,
+  style: Style.PAINT,
 }
 let points: Vector[] = []
 let centroids: Vector[] = []
@@ -34,7 +42,7 @@ const sketch = (p: p5) => {
     image = p.loadImage(img)
   }
   p.setup = () => {
-    p.frameRate(10)
+    // p.frameRate(10)
     config.width = image.width
     config.height = image.height
     p.createCanvas(config.width, config.height)
@@ -53,7 +61,7 @@ const sketch = (p: p5) => {
   }
 
   const resetCanvas = (p: p5) => {
-    if (iterate > config.iterate) {
+    if (!config.infinite && iterate > config.iterate) {
       p.noLoop()
       console.log('done')
       // console.log('maxWeight', maxWeight, 'avgWeights', avgWeights)
@@ -70,9 +78,16 @@ const sketch = (p: p5) => {
     for (let i = 0; i < points.length; i++) {
       const v = points[i]
       const color = image.get(v.x, v.y)
-      p.stroke(color)
-      // p.stroke(0)
-      const sw = p.map(avgWeights[i], 0, maxWeight, config.pointMinSize, config.pointMaxSize, true)
+      let sw
+      switch (config.style) {
+        case Style.POINTS:
+          sw = 2
+          p.stroke(0)
+          break
+        case Style.PAINT:
+          sw = p.map(avgWeights[i], 0, maxWeight, config.pointMinSize, config.pointMaxSize, true)
+          p.stroke(color)
+      }
       p.strokeWeight(sw)
       p.point(v.x, v.y)
     }
@@ -107,7 +122,7 @@ const sketch = (p: p5) => {
         const r = image.pixels[index]
         const g = image.pixels[index + 1]
         const b = image.pixels[index + 2]
-        const bright = (r + g + b) / 3
+        const bright = 0.2126 * r + 0.7152 * g + 0.0722 * b
         const weight = 1 - bright / 255
         delaunayIndex = delaunay.find(i, j, delaunayIndex)
         centroids[delaunayIndex].x += i * weight
@@ -131,7 +146,7 @@ const sketch = (p: p5) => {
     }
 
     for (let i = 0; i < points.length; i++) {
-      points[i].lerp(centroids[i], 0.2)
+      points[i].lerp(centroids[i], 1)
     }
   }
 
