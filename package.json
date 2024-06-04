@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "gen": "zx ./bin/gen.mjs",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "d3-delaunay": "^6.0.4",
-    "p5": "^1.9.3"
+    "p5": "^1.9.3",
+    "zx": "^8.1.2"
   }
 }
