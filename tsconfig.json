@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "fluid", "weighed-voronoi-stippling"]
+  "include": ["src", "fluid", "weighed-voronoi-stippling", "assets", "floyd-steinberg-dithering"]
 }
