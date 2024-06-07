@@ -1,9 +1,13 @@
 import './style.css'
 import p5 from 'p5'
-import image from '../assets/gloria.jpeg'
-// import image from '../assets/fujii.jpeg'
+// import image from '../assets/gloria.jpeg'
+import image from '../assets/the-Statue-of-David.jpg'
+
+const MAX_FACTOR = 4
+let factor = 1
 
 let img: p5.Image
+let originalImage: p5.Image
 const sketch = (p: p5) => {
   p.preload = () => {
     img = p.loadImage(image)
@@ -11,7 +15,9 @@ const sketch = (p: p5) => {
   p.setup = () => {
     p.createCanvas(img.width, img.height * 2)
     p.noLoop()
-    // console.log(img)
+    p.frameRate(1)
+    originalImage = p.createImage(img.width, img.height)
+    originalImage.copy(img, 0, 0, img.width, img.height, 0, 0, img.width, img.height)
   }
   /**
  * for each y from top to bottom do
@@ -29,9 +35,29 @@ const sketch = (p: p5) => {
   const index = (x: number, y: number) => (x + y * img.width) * 4
 
   p.draw = () => {
+    if (factor >= MAX_FACTOR) {
+      p.noLoop()
+      console.log('done')
+    } else {
+      factor++
+    }
+    originalImage.filter(p.GRAY)
+    img = p.createImage(originalImage.width, originalImage.height)
+    img.copy(
+      originalImage,
+      0,
+      0,
+      originalImage.width,
+      originalImage.height,
+      0,
+      0,
+      originalImage.width,
+      originalImage.height
+    )
     p.background(0)
     img.filter(p.GRAY)
-    p.image(img, 0, 0)
+    p.image(originalImage, 0, 0)
+    // img.copy(0, 0, img.width, img.height, 0, img.height, img.width, img.height)
     img.loadPixels()
 
     for (let y = 0; y < img.height; y++) {
@@ -41,7 +67,7 @@ const sketch = (p: p5) => {
         const g = img.pixels[pixelIndex + 1]
         const b = img.pixels[pixelIndex + 2]
 
-        const factor = 4
+        // const factor = 2
 
         const newR = ~~((~~((factor * r) / 255) * 255) / factor)
         const newG = ~~((~~((factor * g) / 255) * 255) / factor)
