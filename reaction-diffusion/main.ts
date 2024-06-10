@@ -62,6 +62,7 @@ const laplaceB = (x: number, y: number) => {
 
 const sketch = (p: p5) => {
   p.setup = () => {
+    p.pixelDensity(1)
     p.createCanvas(config.width, config.height)
     // p.noLoop()
     for (let i = 0; i < config.width; i++) {
@@ -84,6 +85,7 @@ const sketch = (p: p5) => {
       }
     }
   }
+
   p.draw = () => {
     p.background(0)
     for (let i = 0; i < config.width; i++) {
