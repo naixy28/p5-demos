@@ -2,8 +2,8 @@ import './style.css'
 import p5 from 'p5'
 
 const config = {
-  width: 400,
-  height: 400,
+  width: 50,
+  height: 50,
   dA: 1,
   dB: 0.5,
   feed: 0.055,
@@ -79,8 +79,8 @@ const sketch = (p: p5) => {
         }
       }
     }
-    for (let i = 195; i < 205; i++) {
-      for (let j = 195; j < 205; j++) {
+    for (let i = 23; i < 27; i++) {
+      for (let j = 23; j < 27; j++) {
         grid[i][j].b = 1
       }
     }
@@ -106,7 +106,6 @@ const sketch = (p: p5) => {
         p.pixels[index + 1] = concentration
         p.pixels[index + 2] = concentration
         p.pixels[index + 3] = 255
-        // p.pixels[index + 0] = 255 * grid[i][j].a - 255 * grid[i][j].b
       }
     }
     p.updatePixels()
